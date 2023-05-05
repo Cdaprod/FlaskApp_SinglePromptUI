@@ -51,12 +51,20 @@
             background-color: #2E7DFF;
         }
 
-        #output {
+        #log {
             margin-top: 20px;
             border: 1px solid #ccc;
             border-radius: 3px;
             padding: 10px;
             min-height: 100px;
+            overflow-y: auto;
+        }
+
+        .response {
+            margin-bottom: 10px;
+            padding: 5px;
+            border-radius: 3px;
+            background-color: #f1f1f1;
         }
     </style>
 </head>
@@ -65,13 +73,13 @@
         <h1>API Call Demo</h1>
         <textarea id="userInput" placeholder="Enter your text here..."></textarea>
         <button id="submitButton" onclick="processInput()">Submit</button>
-        <div id="output"></div>
+        <div id="log"></div>
     </div>
 
     <script>
         async function processInput() {
             const userInput = document.getElementById('userInput');
-            const output = document.getElementById('output');
+            const log = document.getElementById('log');
 
             const API_URL = "/api";
 
@@ -91,10 +99,19 @@
                     throw new Error(`HTTP error: ${response.status}`);
                 }
                 const result = await response.json();
-                output.textContent = result.choices[0].text; // Display the model-generated text
+                displayResponse(result.choices[0].text); // Display the model-generated text
             } catch (error) {
-                output.textContent = `Error: ${error.message}`;
+                displayResponse(`Error: ${error.message}`);
             }
+        }
+
+        function displayResponse(text) {
+            const log = document.getElementById('log');
+            const response = document.createElement('div');
+            response.className = 'response';
+            response.textContent = text;
+            log.appendChild(response);
+            log.scrollTop = log.scrollHeight; // Scroll to the bottom of the log
         }
     </script>
 </body>

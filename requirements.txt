@@ -1,3 +1,4 @@
 Flask
 Gradio
 Waitress
+python-dotenv

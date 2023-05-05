@@ -1,10 +1,14 @@
 import os
 from flask import Flask, request, jsonify, send_from_directory
 import requests
+import dotenv
 
 app = Flask(__name__)
 
+dotenv.load_dotenv()
 API_KEY = os.environ.get("HUGGINGFACE_API_KEY")
+
+
 if not API_KEY:
     raise ValueError("HUGGINGFACE_API_KEY environment variable not set")
 API_URL = "https://api-inference.huggingface.co/models/gpt3/"
